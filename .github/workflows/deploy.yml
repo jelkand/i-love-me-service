@@ -1,0 +1,85 @@
+name: Deploy typescript-service-template
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  SERVICE_NAME: typescript-service-template
+  REGISTRY_NAME: jelkand
+  CLUSTER_NAME: jelkand
+  CLUSTER_RESOURCE_GROUP: general
+  NAMESPACE: typescript-service-template
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build
+        env:
+          TYPEORM_HOST: ${{ secrets.POSTGRES_HOST }}
+          TYPEORM_USERNAME: ${{ secrets.POSTGRES_USER }}
+          TYPEORM_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          TYPEORM_DATABASE: ${{ secrets.POSTGRES_DB }}
+          TYPEORM_PORT: ${{ secrets.POSTGRES_PORT }}
+        run: |
+          docker-compose build
+
+      - name: Execute Unit Tests
+        run: |
+          docker-compose run --rm dev npm i
+          docker-compose run --rm dev npm test
+
+      - name: Migrate production database
+        run: docker-compose run --rm ci npm run migrate
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to container registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and Push
+        run: |
+          docker tag ${{ env.SERVICE_NAME }}_ci ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.SERVICE_NAME }}:${{ github.sha }}
+
+      - name: Set target AKS cluster
+        uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      - run: |
+          kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+      - name: Create connection secret
+        uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
+          namespace: ${{ env.NAMESPACE }}
+
+      - name: Deploy to k8s
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: kubernetes/definition.yml
+          images: |
+            ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          imagepullsecrets: |
+            ${{ env.REGISTRY_NAME }}-registry-connection
+          namespace: ${{ env.NAMESPACE }}

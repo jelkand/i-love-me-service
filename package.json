@@ -1,0 +1,64 @@
+{
+  "name": "typescript-service-template",
+  "version": "0.1.0",
+  "description": "An opinionated template for spinning up typescript services.",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "generate": "graphql-codegen",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix .",
+    "migrate": "typeorm migration:run",
+    "start:ci": "node dist/server/server.js",
+    "start:dev": "concurrently \"npm run build:watch\" \"nodemon dist/server/server.js\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jelkand/typescript-service-template.git"
+  },
+  "author": "Jack Anderson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jelkand/typescript-service-template/issues"
+  },
+  "homepage": "https://github.com/jelkand/typescript-service-template#readme",
+  "devDependencies": {
+    "@graphql-codegen/add": "^1.13.0",
+    "@graphql-codegen/cli": "^1.13.2",
+    "@graphql-codegen/typescript": "^1.6.1",
+    "@graphql-codegen/typescript-resolvers": "^1.6.1",
+    "@types/jest": "^24.0.17",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "concurrently": "^4.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^25.1.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "ts-jest": "^25.3.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@types/bluebird": "^3.5.27",
+    "@types/bunyan": "^1.8.6",
+    "@types/node": "^12.7.1",
+    "@types/sequelize": "^4.28.4",
+    "@types/validator": "^10.11.2",
+    "apollo-server": "^2.12.0",
+    "apollo-server-plugin-base": "^0.7.1",
+    "apollo-server-types": "^0.3.1",
+    "bunyan": "^1.8.12",
+    "graphql": "^15.0.0",
+    "pg": "^7.12.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.24",
+    "uuid": "^3.3.3"
+  }
+}
