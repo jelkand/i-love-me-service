@@ -2,17 +2,20 @@ import { gql } from 'apollo-server-express'
 
 export default gql`
   type Query {
-    sample(id: String!): Sample
+    user(id: String!): User
   }
 
   type Mutation {
-    createSample(attribute: String): Sample
-    updateSample(id: String!, attribute: String): Int
-    deleteSample(id: String!): Int
+    createUser(firstName: String, lastName: String): User
+    updateUser(id: String!, firstName: String, lastName: String): Int
+    deleteUser(id: String!): Int
   }
 
-  type Sample {
+  type User {
     id: ID!
-    attribute: String
+    firstName: String
+    lastName: String
+    createdAt: String
+    updatedAt: String
   }
 `

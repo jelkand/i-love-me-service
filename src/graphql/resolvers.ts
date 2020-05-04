@@ -1,43 +1,31 @@
 import { QueryResolvers, Maybe, MutationResolvers } from '../typings/graphql'
-import { SampleModel as dbSampleModel } from '../db/entity/SampleModel'
+import { User as dbUser } from '../db/entity/User'
 
 const Query: QueryResolvers = {
-  sample: async (
-    obj,
-    { id },
-    { SampleModel },
-  ): Promise<Maybe<dbSampleModel>> => {
-    const result = await SampleModel.findOne({ id })
+  user: async (obj, { id }, { User }): Promise<Maybe<dbUser>> => {
+    const result = await User.findOne({ id })
     return Promise.resolve(result || null)
   },
 }
 
 const Mutation: MutationResolvers = {
-  createSample: async (
-    obj,
-    args,
-    { SampleModel },
-  ): Promise<Maybe<dbSampleModel>> => {
-    const result = await SampleModel.create(args).save()
+  createUser: async (obj, args, { User }): Promise<Maybe<dbUser>> => {
+    const result = await User.create(args).save()
     return Promise.resolve(result || null)
   },
-  updateSample: async (
+  updateUser: async (
     obj,
-    { id, attribute },
-    { SampleModel },
+    { id, firstName, lastName },
+    { User },
   ): Promise<Maybe<number>> => {
-    const { affected } = await SampleModel.update(
+    const { affected } = await User.update(
       { id },
-      { attribute: attribute || undefined },
+      { firstName: firstName || undefined, lastName: lastName || undefined },
     )
     return Promise.resolve(affected || null)
   },
-  deleteSample: async (
-    obj,
-    { id },
-    { SampleModel },
-  ): Promise<Maybe<number>> => {
-    const { affected } = await SampleModel.delete({ id })
+  deleteUser: async (obj, { id }, { User }): Promise<Maybe<number>> => {
+    const { affected } = await User.delete({ id })
     return Promise.resolve(affected || null)
   },
 }
