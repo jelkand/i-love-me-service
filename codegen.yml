@@ -9,4 +9,5 @@ generates:
       useIndexSignature: true
       mappers:
         User: '../db/entity/User#User as UserModel'
+        Accomplishment: '../db/entity/Accomplishment#Accomplishment as AccomplishmentModel'
       contextType: ../typings/context#Context

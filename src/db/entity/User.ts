@@ -5,7 +5,9 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
+import { Accomplishment } from './Accomplishment'
 
 @Entity()
 export class User extends BaseEntity {
@@ -17,6 +19,9 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   lastName!: string
+
+  @OneToMany(() => Accomplishment, accomplishment => accomplishment.user)
+  accomplishments!: Accomplishment[]
 
   @CreateDateColumn()
   createdAt!: Date

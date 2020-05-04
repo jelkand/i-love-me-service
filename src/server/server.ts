@@ -7,6 +7,7 @@ import typeDefs from '../graphql/typeDefs'
 import resolvers from '../graphql/resolvers'
 
 import { User } from '../db/entity/User'
+import { Accomplishment } from '../db/entity/Accomplishment'
 import { LoggingPlugin } from './plugins/loggingPlugin'
 
 const connection: ConnectionOptions = {
@@ -37,6 +38,8 @@ const connection: ConnectionOptions = {
     context: {
       dbConnection,
       User,
+      Accomplishment,
+      logger,
     },
     plugins: [LoggingPlugin],
   })
