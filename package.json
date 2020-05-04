@@ -1,5 +1,5 @@
 {
-  "name": "typescript-service-template",
+  "name": "i-love-me-service",
   "version": "0.1.0",
   "description": "An opinionated template for spinning up typescript services.",
   "scripts": {
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jelkand/typescript-service-template.git"
+    "url": "git+https://github.com/jelkand/i-love-me-service.git"
   },
   "author": "Jack Anderson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jelkand/typescript-service-template/issues"
+    "url": "https://github.com/jelkand/i-love-me-service/issues"
   },
-  "homepage": "https://github.com/jelkand/typescript-service-template#readme",
+  "homepage": "https://github.com/jelkand/i-love-me-service#readme",
   "devDependencies": {
     "@graphql-codegen/add": "^1.13.0",
     "@graphql-codegen/cli": "^1.13.2",

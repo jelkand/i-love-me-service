@@ -24,7 +24,7 @@ const connection: ConnectionOptions = {
 }
 ;(async (): Promise<void> => {
   const logger = bunyan.createLogger({
-    name: 'typescript-service-template',
+    name: 'i-love-me-service',
   })
 
   const dbConnection = await createConnection(connection)
@@ -43,6 +43,6 @@ const connection: ConnectionOptions = {
 
   await server.listen(port)
   logger.info({
-    message: `typescript-service-template listening on port ${port}`,
+    message: `i-love-me-service listening on port ${port}`,
   })
 })()

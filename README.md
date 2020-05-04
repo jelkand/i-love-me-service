@@ -17,7 +17,7 @@ Running locally, quickly:
 To fully set up (see more in the 'What's Needed' section below):
 
 1. Instantiate a new repository using this as a template.
-2. Replace all instances of `typescript-service-template` with the name of your project.
+2. Replace all instances of `i-love-me-service` with the name of your project.
 3. In your database server, create a new database for your service.
 4. Replace all instances of `typescript_service_template` with the name of your database.
 5. Add the following github secrets to your repository:
@@ -27,9 +27,6 @@ To fully set up (see more in the 'What's Needed' section below):
 - POSTGRES_PASSWORD
 - POSTGRES_DB
 - POSTGRES_PORT
-- AZURE_CREDENTIALS
-- REGISTRY_USERNAME
-- REGISTRY_PASSWORD
 - AZURE_CREDENTIALS
 - REGISTRY_USERNAME
 - REGISTRY_PASSWORD
