@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { GraphQLResolveInfo } from 'graphql';
 import { User as UserModel } from '../db/entity/User';
+import { Accomplishment as AccomplishmentModel } from '../db/entity/Accomplishment';
 import { Context } from '../typings/context';
 export type Maybe<T> = T | null;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
@@ -21,7 +22,7 @@ export type Query = {
 
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
@@ -29,6 +30,7 @@ export type Mutation = {
   createUser?: Maybe<User>;
   updateUser?: Maybe<Scalars['Int']>;
   deleteUser?: Maybe<Scalars['Int']>;
+  createAccomplishment?: Maybe<Accomplishment>;
 };
 
 
@@ -39,14 +41,20 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationUpdateUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
 };
 
 
 export type MutationDeleteUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
+};
+
+
+export type MutationCreateAccomplishmentArgs = {
+  userId: Scalars['ID'];
+  text: Scalars['String'];
 };
 
 export type User = {
@@ -56,6 +64,21 @@ export type User = {
   lastName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
+  accomplishments?: Maybe<Array<Maybe<Accomplishment>>>;
+};
+
+export type Accomplishment = {
+   __typename?: 'Accomplishment';
+  id: Scalars['ID'];
+  user: User;
+  userId: Scalars['ID'];
+  text: Scalars['String'];
+};
+
+export type Tag = {
+   __typename?: 'Tag';
+  id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -135,10 +158,12 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Query: ResolverTypeWrapper<{}>,
+  ID: ResolverTypeWrapper<Scalars['ID']>,
   Mutation: ResolverTypeWrapper<{}>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   User: ResolverTypeWrapper<UserModel>,
-  ID: ResolverTypeWrapper<Scalars['ID']>,
+  Accomplishment: ResolverTypeWrapper<AccomplishmentModel>,
+  Tag: ResolverTypeWrapper<Tag>,
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -146,10 +171,12 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
   Query: {},
+  ID: Scalars['ID'],
   Mutation: {},
   Int: Scalars['Int'],
   User: UserModel,
-  ID: Scalars['ID'],
+  Accomplishment: AccomplishmentModel,
+  Tag: Tag,
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -160,6 +187,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, never>>,
   updateUser?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id'>>,
   deleteUser?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>,
+  createAccomplishment?: Resolver<Maybe<ResolversTypes['Accomplishment']>, ParentType, ContextType, RequireFields<MutationCreateAccomplishmentArgs, 'userId' | 'text'>>,
 }>;
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
@@ -168,6 +196,21 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  accomplishments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Accomplishment']>>>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type AccomplishmentResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Accomplishment'] = ResolversParentTypes['Accomplishment']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type TagResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
@@ -175,6 +218,8 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   Query?: QueryResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   User?: UserResolvers<ContextType>,
+  Accomplishment?: AccomplishmentResolvers<ContextType>,
+  Tag?: TagResolvers<ContextType>,
 }>;
 
 
