@@ -8,5 +8,5 @@ generates:
     config:
       useIndexSignature: true
       mappers:
-        Sample: ../db/entity/SampleModel#SampleModel
+        User: '../db/entity/User#User as UserModel'
       contextType: ../typings/context#Context

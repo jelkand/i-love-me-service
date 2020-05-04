@@ -1,11 +1,12 @@
 import 'reflect-metadata'
 import { createConnection, ConnectionOptions } from 'typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import bunyan from 'bunyan'
 import { ApolloServer } from 'apollo-server'
 import typeDefs from '../graphql/typeDefs'
 import resolvers from '../graphql/resolvers'
 
-import { SampleModel } from '../db/entity/SampleModel'
+import { User } from '../db/entity/User'
 import { LoggingPlugin } from './plugins/loggingPlugin'
 
 const connection: ConnectionOptions = {
@@ -18,6 +19,7 @@ const connection: ConnectionOptions = {
   ssl: process.env.NODE_ENV === 'production',
   synchronize: false,
   logging: process.env.NODE_ENV !== 'production',
+  namingStrategy: new SnakeNamingStrategy(),
   entities: ['dist/db/entity/**/*.js'],
   migrations: ['dist/db/migration/**/*.js'],
   subscribers: ['dist/db/subscriber/**/*.js'],
@@ -34,7 +36,7 @@ const connection: ConnectionOptions = {
     logger,
     context: {
       dbConnection,
-      SampleModel,
+      User,
     },
     plugins: [LoggingPlugin],
   })

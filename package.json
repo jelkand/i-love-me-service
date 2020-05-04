@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/jelkand/i-love-me-service#readme",
   "devDependencies": {
-    "@graphql-codegen/add": "^1.13.0",
-    "@graphql-codegen/cli": "^1.13.2",
-    "@graphql-codegen/typescript": "^1.6.1",
-    "@graphql-codegen/typescript-resolvers": "^1.6.1",
+    "@graphql-codegen/add": "^1.13.5",
+    "@graphql-codegen/cli": "^1.13.5",
+    "@graphql-codegen/typescript": "^1.13.5",
+    "@graphql-codegen/typescript-resolvers": "^1.13.5",
     "@types/jest": "^24.0.17",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
@@ -59,6 +59,7 @@
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.24",
+    "typeorm-naming-strategies": "^1.1.0",
     "uuid": "^3.3.3"
   }
 }

@@ -1,10 +1,10 @@
 import { Connection } from 'typeorm'
 import Logger from 'bunyan'
 
-import { SampleModel } from '../db/entity/SampleModel'
+import { User } from '../db/entity/User'
 
 export interface Context {
   dbConnection: Connection
-  SampleModel: typeof SampleModel
+  User: typeof User
   logger: Logger
 }
