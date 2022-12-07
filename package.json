@@ -27,7 +27,7 @@
   "homepage": "https://github.com/jelkand/i-love-me-service#readme",
   "devDependencies": {
     "@graphql-codegen/add": "^1.13.5",
-    "@graphql-codegen/cli": "^1.13.5",
+    "@graphql-codegen/cli": "^1.21.8",
     "@graphql-codegen/typescript": "^1.13.5",
     "@graphql-codegen/typescript-resolvers": "^1.13.5",
     "@types/jest": "^24.0.17",
